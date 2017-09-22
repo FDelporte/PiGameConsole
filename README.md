@@ -1,5 +1,5 @@
 # PiGameConsole
-A multiplayer game console build with a Raspberry Pi.
+A 2-player game console build with a Raspberry Pi.
 
 # Virtual machine on Windows
 It is possible to run this development on Windows in a virtual machine.</br>
