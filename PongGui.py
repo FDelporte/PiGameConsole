@@ -1,4 +1,7 @@
 # Based on code from https://github.com/mattalexpugh/python-games/blob/master/pong-gui.py
+# Made by Matt Pugh, distributed as GPLv2
+# This code has been modified
+
 from Tkinter import *
 import random
 
