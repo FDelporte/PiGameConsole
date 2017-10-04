@@ -9,6 +9,7 @@ import Tkinter as tk
 import tkFont
 import time
 
+from PongGui import *
 from msvcrt import getch
 
 class PiGameConsole():
@@ -63,6 +64,8 @@ class PiGameConsole():
         
         exitButton = tk.Button(win, text="Quit", font=myFont, command=exitProgram, bg="grey", height=1, width=24)
         exitButton.grid(row = 0, sticky=tk.NSEW)
+        
+        #PongGui(win, 300, 200)
         
         tk.mainloop()
     
