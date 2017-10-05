@@ -2,29 +2,72 @@
 # Made by Matt Pugh, distributed as GPLv2
 # This code has been modified
 
-from Tkinter import *
+# https://stackoverflow.com/questions/16115378/tkinter-example-code-for-multiple-windows-why-wont-buttons-load-correctly
+
+import Tkinter as tk
 import random
 
-class PongGui(object):
+from Tkinter import *
+
+class PongGui(tk.Frame):
     
-    canvas = ""
-    ball = ""
+    canvas = None
+    ball = None
     dx = 0 
     dy = 0
+    flip_y = 0
     computer = ""
     computer_score = 0
     computer_score_label = ""
-    player = ""
+    player = None
     player_score = 0
     player_score_label = ""
-    master = Tk()
     PADDLE_MOVEMENT = 0
     REFRESH_TIME = 0
     WIDTH = 0
     HEIGHT = 0
+    
+    def __init__(self, parent, w, h):
+        tk.Frame.__init__(self, parent)
+        
+        # Window dimensions and other constants
+        self.WIDTH = w
+        self.HEIGHT = h
+        self.PADDLE_MOVEMENT = 5
+        self.REFRESH_TIME = 10  # milliseconds
+        
+        # Game variables
+        player_score = 0
+        computer_score = 0
+        
+        # The Tk labels to show the score
+        player_score_label = None
+        computer_score_label = None
+        
+        # Set up the GUI window via Tk        
+        self.canvas = Canvas(self, background="black", width=self.WIDTH, height=self.HEIGHT)
+        self.canvas.create_line((200, 0, 200, 400), fill="white")
+        self.canvas.pack(side="bottom", fill="x", padx=4)
+        
+        # Keep a reference for the GUI elements
+        self.player = self.canvas.create_rectangle((10, 150, 30, 250), fill="white")
+        self.computer = self.canvas.create_rectangle((370, 150, 390, 250), fill="white")
+        self.ball = None  # Set this variable up for reset_ball()
+        
+        # Ball acceleration (set in reset_ball())
+        dx = 0
+        dy = 0
+        
+        # Let's play!
+        self.reset_ball()
+        
+        print "Pong started"
 
+    def get(self):
+        return self.canvas.get()
+    
     def move(self, direction):    
-        coords = canvas.coords(player)
+        coords = self.canvas.coords(player)
     
         if (direction == 'up' and coords[1] <= 10) or \
            (direction == 'down' and coords[3] >= HEIGHT):
@@ -65,18 +108,18 @@ class PongGui(object):
     def bounce_ball(self):  
         self.dx = -self.dx
         self.dy = random.randint(1, 3)
-        flip_y = random.randint(0, 1) * 1
+        self.flip_y = random.randint(0, 1) * 1
     
-        if flip_y:
+        if self.flip_y:
             self.dy = -self.dy
         
     def reset_ball(self):    
-        flip_x = random.randint(0, 1) * 1
-        dx = random.randint(2, 3)
-        dy = random.randint(1, 3)
+        self.flip_x = random.randint(0, 1) * 1
+        self.dx = random.randint(2, 3)
+        self.dy = random.randint(1, 3)
     
-        if flip_x == 1:
-            dx = -dx
+        if self.flip_x == 1:
+            self.dx = -self.dx
     
         self.canvas.delete(self.ball)
         self.ball = self.canvas.create_rectangle((190, 190, 210, 210), fill="white")
@@ -109,45 +152,3 @@ class PongGui(object):
                 self.bounce_ball()
     
         self.master.after(self.REFRESH_TIME, self.refresh)
-    
-    def __init__(self, win, w, h):
-        # Window dimensions and other constants
-        WIDTH = w
-        HEIGHT = h
-        PADDLE_MOVEMENT = 5
-        REFRESH_TIME = 10  # milliseconds
-        
-        # Game variables
-        player_score = 0
-        computer_score = 0
-        
-        # The Tk labels to show the score
-        player_score_label = None
-        computer_score_label = None
-        
-        # Set up the GUI window via Tk
-        self.master = win
-        self.master.title("Pong in Python / Tk!")
-        
-        self.canvas = Canvas(self.master, background="black", width=self.WIDTH, height=self.HEIGHT)
-        self.canvas.create_line((200, 0, 200, 400), fill="white")
-        
-        # Keep a reference for the GUI elements
-        player = self.canvas.create_rectangle((10, 150, 30, 250), fill="white")
-        computer = self.canvas.create_rectangle((370, 150, 390, 250), fill="white")
-        ball = None  # Set this variable up for reset_ball()
-        
-        # Ball acceleration (set in reset_ball())
-        dx = 0
-        dy = 0
-        
-        self.canvas.pack()
-        
-        # Bind the keyboard events to our functions
-        self.master.bind("<KeyPress-Up>", self.move_up)
-        self.master.bind("<KeyPress-Down>", self.move_down)
-        
-        # Let's play!
-        self.reset_ball()
-        self.master.after(self.REFRESH_TIME, self.refresh)
-        self.master.mainloop()

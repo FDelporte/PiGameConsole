@@ -65,9 +65,10 @@ class PiGameConsole():
         exitButton = tk.Button(win, text="Quit", font=myFont, command=exitProgram, bg="grey", height=1, width=24)
         exitButton.grid(row = 0, sticky=tk.NSEW)
         
-        #PongGui(win, 300, 200)
+        pong = PongGui(win, 1200, 800)
+        pong.grid(row = 1, sticky=tk.NSEW)
         
-        tk.mainloop()
+        win.mainloop()
     
 if __name__ == "__main__":
     
