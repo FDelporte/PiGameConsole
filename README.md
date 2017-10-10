@@ -19,3 +19,4 @@ http://raspi.tv/2013/how-to-use-interrupts-with-python-on-the-raspberry-pi-and-r
 
 # Thanks to
 * Matt Pugh - https://github.com/mattalexpugh/python-games/blob/master/pong-gui.py
+* Test images - http://www.openfotos.com/nature

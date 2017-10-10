@@ -77,7 +77,7 @@ class PiGameConsole():
         
     def startSlideShow(self):
         slideShow = SlideShow(self.win, 1400, 1000)
-        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))     
+        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   
         
     def startPong(self):        
         pong = PongGui(self.win, 1400, 1000)
