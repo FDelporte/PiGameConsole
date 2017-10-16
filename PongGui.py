@@ -16,16 +16,20 @@ class PongGui(tk.Frame):
     dx = 0 
     dy = 0
     flip_y = 0
-    computer = ""
-    computer_score = 0
-    computer_score_label = ""
-    player = None
-    player_score = 0
-    player_score_label = ""
-    PADDLE_MOVEMENT = 0
+    player1 = None
+    player1_score = 0
+    player1_score_label = ""
+    player2 = ""
+    player2_score = 0
+    player2_score_label = ""
+    PADDLE_MOVEMENT = 5
     REFRESH_TIME = 0
     WIDTH = 0
     HEIGHT = 0
+    
+    PLAYER_OFFSET = 10
+    PLAYER_WIDTH = 20
+    PLAYER_HEIGHT = 100
     
     def __init__(self, parent, w, h):
         tk.Frame.__init__(self, parent)
@@ -37,21 +41,21 @@ class PongGui(tk.Frame):
         self.REFRESH_TIME = 10  # milliseconds
         
         # Game variables
-        player_score = 0
-        computer_score = 0
+        player1_score = 0
+        player2_score = 0
         
         # The Tk labels to show the score
-        player_score_label = None
-        computer_score_label = None
+        player1_score_label = None
+        player2_score_label = None
         
         # Set up the GUI window via Tk        
         self.canvas = Canvas(self, background="black", width=self.WIDTH, height=self.HEIGHT)
-        self.canvas.create_line((200, 0, 200, 400), fill="white")
+        self.canvas.create_line((self.WIDTH / 2, 0, self.WIDTH / 2, self.HEIGHT), fill="white")
         self.canvas.pack(side="bottom", fill="x", padx=4)
         
         # Keep a reference for the GUI elements
-        self.player = self.canvas.create_rectangle((10, 150, 30, 250), fill="white")
-        self.computer = self.canvas.create_rectangle((370, 150, 390, 250), fill="white")
+        self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="white")
+        self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="white")
         self.ball = None  # Set this variable up for reset_ball()
         
         # Ball acceleration (set in reset_ball())
@@ -61,13 +65,15 @@ class PongGui(tk.Frame):
         # Let's play!
         self.reset_ball()
         
+        self.after(self.REFRESH_TIME, self.refresh)
+        
         print "Pong started"
 
     def get(self):
         return self.canvas.get()
     
     def move(self, direction):    
-        coords = self.canvas.coords(player)
+        coords = self.canvas.coords(player1)
     
         if (direction == 'up' and coords[1] <= 10) or \
            (direction == 'down' and coords[3] >= HEIGHT):
@@ -78,7 +84,7 @@ class PongGui(tk.Frame):
         else:
             movement = PADDLE_MOVEMENT
     
-        canvas.move(player, 0, movement)
+        canvas.move(player1, 0, movement)
     
     def move_up(self, event):
         self.move('up')
@@ -89,21 +95,21 @@ class PongGui(tk.Frame):
     def move_ball(self):    
         self.canvas.move(self.ball, self.dx, self.dy)    
     
-    def move_computer(self):    
+    def move_player2(self):    
         ball_pos = self.canvas.coords(self.ball)
-        comp_pos = self.canvas.coords(self.computer)
+        comp_pos = self.canvas.coords(self.player2)
     
         '''if ball_pos[1] > comp_pos[1] and comp_pos[3] < self.HEIGHT:
-            self.canvas.move(self.computer, 0, self.PADDLE_MOVEMENT)
+            self.canvas.move(self.player2, 0, self.PADDLE_MOVEMENT)
         elif ball_pos[1] < comp_pos[1] and comp_pos[1] > 10:
-            self.canvas.move(self.computer, 0, -self.PADDLE_MOVEMENT)'''
+            self.canvas.move(self.player2, 0, -self.PADDLE_MOVEMENT)'''
         
     def show_scores(self):    
-        self.canvas.delete(self.player_score_label)
-        self.canvas.delete(self.computer_score_label)
+        self.canvas.delete(self.player1_score_label)
+        self.canvas.delete(self.player2_score_label)
     
-        self.player_score_label = self.canvas.create_text(190, 15, text=self.player_score, fill='white', font=('Arial', 15))
-        self.computer_score_label = self.canvas.create_text(210, 15, text=self.computer_score, fill='white', font=('Arial', 15))
+        self.player1_score_label = self.canvas.create_text((self.WIDTH / 2) - 60, 40, text=self.player1_score, fill='white', font=('Arial', 30))
+        self.player2_score_label = self.canvas.create_text((self.WIDTH / 2) + 50, 40, text=self.player2_score, fill='white', font=('Arial', 30))
         
     def bounce_ball(self):  
         self.dx = -self.dx
@@ -122,7 +128,7 @@ class PongGui(tk.Frame):
             self.dx = -self.dx
     
         self.canvas.delete(self.ball)
-        self.ball = self.canvas.create_rectangle((190, 190, 210, 210), fill="white")
+        self.ball = self.canvas.create_rectangle((self.WIDTH / 4, self.HEIGHT / 4, (self.WIDTH / 4) + 20, (self.HEIGHT / 4) + 20), fill="white")
         
     def refresh(self):
         """
@@ -130,14 +136,14 @@ class PongGui(tk.Frame):
         """    
         self.show_scores()
         self.move_ball()
-        self.move_computer()
+        self.move_player2()
         ball_coords = self.canvas.coords(self.ball)
     
         if ball_coords[0] < 0:
-            self.computer_score = self.computer_score + 1
+            self.player2_score = self.player2_score + 1
             self.reset_ball()
         elif ball_coords[0] > self.WIDTH:
-            self.player_score = self.player_score + 1
+            self.player1_score = self.player1_score + 1
             self.reset_ball()
     
         if ball_coords[1] < 0 or ball_coords[3] > self.HEIGHT:
@@ -148,7 +154,7 @@ class PongGui(tk.Frame):
         if len(overlapping) > 1:
             collided_item = overlapping[0]
     
-            if collided_item == self.player or collided_item == self.computer:
+            if collided_item == self.player1 or collided_item == self.player2:
                 self.bounce_ball()
     
         self.master.after(self.REFRESH_TIME, self.refresh)

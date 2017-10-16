@@ -71,7 +71,8 @@ class PiGameConsole():
         self.showButtonControls(1)
         self.showMenu(1)
         
-        self.startSlideShow()
+        #self.startSlideShow()
+        self.startPong()
         
         self.win.mainloop()
         
