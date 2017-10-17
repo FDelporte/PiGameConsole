@@ -13,8 +13,8 @@ class PongGui(tk.Frame):
     
     canvas = None
     ball = None
-    dx = 0 
-    dy = 0
+    dx = 10 
+    dy = 10
     flip_y = 0
     player1 = None
     player1_score = 0
@@ -22,7 +22,7 @@ class PongGui(tk.Frame):
     player2 = ""
     player2_score = 0
     player2_score_label = ""
-    PADDLE_MOVEMENT = 5
+    PADDLE_MOVEMENT = 25
     REFRESH_TIME = 0
     WIDTH = 0
     HEIGHT = 0
@@ -72,19 +72,25 @@ class PongGui(tk.Frame):
     def get(self):
         return self.canvas.get()
     
-    def move(self, direction):    
-        coords = self.canvas.coords(player1)
+    def move(self, playerNumber, direction):    
+        coords = self.canvas.coords(self.player1)
+        
+        if playerNumber == 2:
+            coords = self.canvas.coords(self.player2)
     
         if (direction == 'up' and coords[1] <= 10) or \
-           (direction == 'down' and coords[3] >= HEIGHT):
+           (direction == 'down' and coords[3] >= self.HEIGHT):
            return False
     
         if direction == 'up':
-            movement = -PADDLE_MOVEMENT
+            movement = -self.PADDLE_MOVEMENT
         else:
-            movement = PADDLE_MOVEMENT
+            movement = self.PADDLE_MOVEMENT
     
-        canvas.move(player1, 0, movement)
+        if playerNumber == 1:
+            self.canvas.move(self.player1, 0, movement)
+        elif playerNumber == 2:
+            self.canvas.move(self.player2, 0, movement)
     
     def move_up(self, event):
         self.move('up')

@@ -17,9 +17,11 @@ from msvcrt import getch
 class PiGameConsole():
     
     consoleRunning = True
-    gameBusy = False
+    pongBusy = False
     keepRunning = False
+    
     win = None
+    pong = None
     
     def __init__(self):
         print("PiGameConsole initiated")
@@ -40,17 +42,25 @@ class PiGameConsole():
             cmd = raw_input("Test commands (black/red): Controlbox 1/2 - Player1 3/4 - Player2 5/6")
             
             if cmd == "1":
-              print("Controlbox black")  
+                print("Controlbox black")  
             elif cmd == "2":
-              print("Controlbox red")  
+                print("Controlbox red")  
             elif cmd == "3":
-              print("Player1 black")  
+                print("Player1 black")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(1, "up")
             elif cmd == "4":
-              print("Player1 red")  
+                print("Player1 red")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(1, "down")
             elif cmd == "5":
-              print("Player2 black")  
+                print("Player2 black")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(2, "up")
             elif cmd == "6":
-              print("Player2 red")  
+                print("Player2 red")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(2, "down")
               
     def startGUI(self):
         # Start the GUI
@@ -81,8 +91,10 @@ class PiGameConsole():
         slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   
         
     def startPong(self):        
-        pong = PongGui(self.win, 1400, 1000)
-        pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))     
+        self.pong = PongGui(self.win, 1400, 1000)
+        self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
+        
+        self.pongBusy = True 
                 
     def showMenu(self, item):      
         menuFrame = Frame(self.win)
