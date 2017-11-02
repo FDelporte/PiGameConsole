@@ -12,8 +12,6 @@ import time
 from PongGui import *
 from SlideShow import *
 
-from msvcrt import getch
-
 class PiGameConsole():
     
     consoleRunning = True
@@ -87,11 +85,11 @@ class PiGameConsole():
         self.win.mainloop()
         
     def startSlideShow(self):
-        slideShow = SlideShow(self.win, 1400, 1000)
+        slideShow = SlideShow(self.win, 1400, 960)
         slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   
         
     def startPong(self):        
-        self.pong = PongGui(self.win, 1400, 1000)
+        self.pong = PongGui(self.win, 1400, 960)
         self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
         
         self.pongBusy = True 

@@ -2,7 +2,9 @@ import Tkinter as tk
 
 from itertools import cycle
 from Tkinter import *
-from PIL import Image, ImageTk # pip install Pillow
+
+import PIL.Image # pip install pillow
+import PIL.ImageTk
 
 class SlideShow(tk.Frame):
     

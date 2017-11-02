@@ -6,6 +6,7 @@
 
 import Tkinter as tk
 import random
+import time
 
 from Tkinter import *
 
@@ -136,6 +137,23 @@ class PongGui(tk.Frame):
         self.canvas.delete(self.ball)
         self.ball = self.canvas.create_rectangle((self.WIDTH / 4, self.HEIGHT / 4, (self.WIDTH / 4) + 20, (self.HEIGHT / 4) + 20), fill="white")
         
+    def show_goal(self, player):
+        placeX = (self.WIDTH / 2) - 300
+        
+        if player == 2:
+            placeX = (self.WIDTH / 2) + 300
+        
+        for k in range(1, 6):
+            goal_label = self.canvas.create_text(placeX, (self.HEIGHT / 2), text="GOAL!!!", fill='green', font=('Arial', 60))
+            self.canvas.update()
+            
+            time.sleep(0.4)
+            
+            self.canvas.delete(goal_label)
+            self.canvas.update()
+            
+            time.sleep(0.1)
+        
     def refresh(self):
         """
         This is the method which updates all elements in the game.
@@ -147,9 +165,12 @@ class PongGui(tk.Frame):
     
         if ball_coords[0] < 0:
             self.player2_score = self.player2_score + 1
+            self.show_goal(2)
             self.reset_ball()
+            
         elif ball_coords[0] > self.WIDTH:
             self.player1_score = self.player1_score + 1
+            self.show_goal(1)
             self.reset_ball()
     
         if ball_coords[1] < 0 or ball_coords[3] > self.HEIGHT:
