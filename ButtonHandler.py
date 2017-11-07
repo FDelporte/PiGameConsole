@@ -5,6 +5,7 @@ Created on Nov 7, 2017
 '''
 
 import RPi.GPIO as GPIO # pip install RPi.GPIO
+import time
 
 class ButtonHandler():
     
@@ -38,5 +39,16 @@ class ButtonHandler():
             return GPIO.input(self.port_player2_green);
         elif buttonNumber == 6:
             return GPIO.input(self.port_player2_red);
+        
+if __name__ == "__main__":
+    
+    btn = ButtonHandler()
+    
+    while (True):
+        
+        print(str(btn.getButton(1)) + "," + tr(btn.getButton(2)) + "," + tr(btn.getButton(3)) + "," + tr(btn.getButton(4)) + "," + tr(btn.getButton(5)) + "," + tr(btn.getButton(6)))
+        
+        time.sleep(100)
+        
         
         
