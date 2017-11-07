@@ -9,8 +9,9 @@ import Tkinter as tk
 import tkFont
 import time
 
+from ButtonHandler import *
 from PongGui import *
-from SlideShow import *
+#from SlideShow import *
 
 class PiGameConsole():
     
@@ -62,26 +63,30 @@ class PiGameConsole():
                     
     def buttonInput(self):
         
-        if ButtonHandler.getButton(1) == true:
-            print("Controlbox black")  
-        elif ButtonHandler.getButton(2) == true:
-            print("Controlbox red")  
-        elif ButtonHandler.getButton(3) == true:
-            print("Player1 black")  
-            if self.pongBusy == True and self.pong != None:
-                self.pong.move(1, "up")
-        elif ButtonHandler.getButton(4) == true:
-            print("Player1 red")  
-            if self.pongBusy == True and self.pong != None:
-                self.pong.move(1, "down")
-        elif ButtonHandler.getButton(5) == true:
-            print("Player2 black")  
-            if self.pongBusy == True and self.pong != None:
-                self.pong.move(2, "up")
-        elif ButtonHandler.getButton(6) == true:
-            print("Player2 red")  
-            if self.pongBusy == True and self.pong != None:
-                self.pong.move(2, "down")
+        btn = ButtonHandler()
+        
+        while (piGameConsole.consoleRunning):
+            
+            if btn.getButton(1) == True:
+                print("Controlbox black")  
+            elif btn.getButton(2) == True:
+                print("Controlbox red")  
+            elif btn.getButton(3) == True:
+                print("Player1 black")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(1, "up")
+            elif btn.getButton(4) == True:
+                print("Player1 red")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(1, "down")
+            elif btn.getButton(5) == True:
+                print("Player2 black")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(2, "up")
+            elif btn.getButton(6) == True:
+                print("Player2 red")  
+                if self.pongBusy == True and self.pong != None:
+                    self.pong.move(2, "down")
               
     def startGUI(self):
         # Start the GUI
@@ -107,9 +112,9 @@ class PiGameConsole():
         
         self.win.mainloop()
         
-    def startSlideShow(self):
+    '''def startSlideShow(self):
         slideShow = SlideShow(self.win, 1400, 960)
-        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   
+        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   '''
         
     def startPong(self):        
         self.pong = PongGui(self.win, 1400, 960)
