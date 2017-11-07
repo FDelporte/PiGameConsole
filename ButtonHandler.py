@@ -46,7 +46,7 @@ if __name__ == "__main__":
     
     while (True):
         
-        print(str(btn.getButton(1)) + "," + tr(btn.getButton(2)) + "," + tr(btn.getButton(3)) + "," + tr(btn.getButton(4)) + "," + tr(btn.getButton(5)) + "," + tr(btn.getButton(6)))
+        print(str(btn.getButton(1)) + "," + str(btn.getButton(2)) + "," + str(btn.getButton(3)) + "," + str(btn.getButton(4)) + "," + str(btn.getButton(5)) + "," + str(btn.getButton(6)))
         
         time.sleep(100)
         
