@@ -15,7 +15,7 @@ class ButtonHandler():
     port_player2_green = 21
     port_player2_red = 22
     
-    GPIO.setmode(GPIO.BOARD)
+    GPIO.setmode(GPIO.BCM)
     
     GPIO.setup(port_controller_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(port_controller_red, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
