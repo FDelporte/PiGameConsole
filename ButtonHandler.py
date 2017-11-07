@@ -48,7 +48,7 @@ if __name__ == "__main__":
         
         print(str(btn.getButton(1)) + "," + str(btn.getButton(2)) + "," + str(btn.getButton(3)) + "," + str(btn.getButton(4)) + "," + str(btn.getButton(5)) + "," + str(btn.getButton(6)))
         
-        time.sleep(100)
+        time.sleep(0.1)
         
         
         
