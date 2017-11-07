@@ -72,19 +72,19 @@ class PiGameConsole():
             elif btn.getButton(2) == True:
                 print("Controlbox red")  
             elif btn.getButton(3) == True:
-                print("Player1 black")  
+                #print("Player1 black")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(1, "up")
             elif btn.getButton(4) == True:
-                print("Player1 red")  
+                #print("Player1 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(1, "down")
             elif btn.getButton(5) == True:
-                print("Player2 black")  
+                #print("Player2 black")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "up")
             elif btn.getButton(6) == True:
-                print("Player2 red")  
+                #print("Player2 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "down")
             
