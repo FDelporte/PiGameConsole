@@ -59,6 +59,29 @@ class PiGameConsole():
                 print("Player2 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "down")
+                    
+    def buttonInput(self):
+        
+        if ButtonHandler.getButton(1) == true:
+            print("Controlbox black")  
+        elif ButtonHandler.getButton(2) == true:
+            print("Controlbox red")  
+        elif ButtonHandler.getButton(3) == true:
+            print("Player1 black")  
+            if self.pongBusy == True and self.pong != None:
+                self.pong.move(1, "up")
+        elif ButtonHandler.getButton(4) == true:
+            print("Player1 red")  
+            if self.pongBusy == True and self.pong != None:
+                self.pong.move(1, "down")
+        elif ButtonHandler.getButton(5) == true:
+            print("Player2 black")  
+            if self.pongBusy == True and self.pong != None:
+                self.pong.move(2, "up")
+        elif ButtonHandler.getButton(6) == true:
+            print("Player2 red")  
+            if self.pongBusy == True and self.pong != None:
+                self.pong.move(2, "down")
               
     def startGUI(self):
         # Start the GUI
@@ -162,5 +185,6 @@ if __name__ == "__main__":
     piGameConsole.keepRunning = True
     thread.start_new_thread(piGameConsole.checkRunning, ())
     thread.start_new_thread(piGameConsole.keyboardInput, ())
+    thread.start_new_thread(piGameConsole.buttonInput, ())
     
     piGameConsole.startGUI()
