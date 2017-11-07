@@ -87,6 +87,8 @@ class PiGameConsole():
                 print("Player2 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "down")
+            
+            time.sleep(0.1)
               
     def startGUI(self):
         # Start the GUI
