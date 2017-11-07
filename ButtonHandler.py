@@ -9,11 +9,13 @@ import RPi.GPIO as GPIO # pip install RPi.GPIO
 class ButtonHandler():
     
     port_controller_green = 19
-    port_controller_red = 20
-    port_player1_green = 21
-    port_player1_red = 22
-    port_player2_green = 23
-    port_player2_red = 24
+    port_controller_red = 26
+    port_player1_green = 13
+    port_player1_red = 06
+    port_player2_green = 21
+    port_player2_red = 22
+    
+    GPIO.setmode(GPIO.BOARD)
     
     GPIO.setup(port_controller_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(port_controller_red, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
