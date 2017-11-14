@@ -9,36 +9,36 @@ import time
 
 class ButtonHandler():
     
-    port_controller_green = 19
-    port_controller_red = 26
+    port_controller_green = 26
+    port_controller_red = 19
     port_player1_green = 13
     port_player1_red = 06
     port_player2_green = 21
-    port_player2_red = 22
+    port_player2_red = 20
     
     GPIO.setmode(GPIO.BCM)
     
     GPIO.setup(port_controller_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_controller_red, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(port_controller_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(port_player1_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_player1_red, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(port_player1_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(port_player2_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_player2_red, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(port_player2_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
     def getButton(self, buttonNumber):
         # Return the button state        
         if buttonNumber == 1:
-            return GPIO.input(self.port_controller_green);
+            return (0 if GPIO.input(self.port_controller_green) == 1 else 1)
         elif buttonNumber == 2:
-            return GPIO.input(self.port_controller_red);
+            return GPIO.input(self.port_controller_red)
         elif buttonNumber == 3:
-            return GPIO.input(self.port_player1_green);
+            return (0 if GPIO.input(self.port_player1_green) == 1 else 1)
         elif buttonNumber == 4:
-            return GPIO.input(self.port_player1_red);
+            return GPIO.input(self.port_player1_red)
         elif buttonNumber == 5:
-            return GPIO.input(self.port_player2_green);
+            return (0 if GPIO.input(self.port_player2_green) == 1 else 1)
         elif buttonNumber == 6:
-            return GPIO.input(self.port_player2_red);
+            return GPIO.input(self.port_player2_red)
         
 if __name__ == "__main__":
     
