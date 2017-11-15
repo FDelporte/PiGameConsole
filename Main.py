@@ -10,6 +10,7 @@ import tkFont
 import time
 
 from ButtonHandler import *
+from KeyReader import *
 from PongGui import *
 #from SlideShow import *
 
@@ -21,7 +22,7 @@ class PiGameConsole():
     
     win = None
     pong = None
-    
+        
     def __init__(self):
         print("PiGameConsole initiated")
 
@@ -34,61 +35,39 @@ class PiGameConsole():
             
             time.sleep(1)
             
-    def keyboardInput(self):
-        
-        while (piGameConsole.consoleRunning):
-            # Keyboard handler for testing
-            cmd = raw_input("Test commands (black/red): Controlbox 1/2 - Player1 3/4 - Player2 5/6")
-            
-            if cmd == "1":
-                print("Controlbox black")  
-            elif cmd == "2":
-                print("Controlbox red")  
-            elif cmd == "3":
-                print("Player1 black")  
-                if self.pongBusy == True and self.pong != None:
-                    self.pong.move(1, "up")
-            elif cmd == "4":
-                print("Player1 red")  
-                if self.pongBusy == True and self.pong != None:
-                    self.pong.move(1, "down")
-            elif cmd == "5":
-                print("Player2 black")  
-                if self.pongBusy == True and self.pong != None:
-                    self.pong.move(2, "up")
-            elif cmd == "6":
-                print("Player2 red")  
-                if self.pongBusy == True and self.pong != None:
-                    self.pong.move(2, "down")
-                    
-    def buttonInput(self):
+    def checkInput(self):
         
         btn = ButtonHandler()
+        key = KeyReader()
         
-        while (piGameConsole.consoleRunning):
-            
-            if btn.getButton(1) == True:
+        while (piGameConsole.consoleRunning):            
+            if btn.getButton(1) == True or key.getKey("1") == True:
                 print("Controlbox black")  
-            elif btn.getButton(2) == True:
+            
+            if btn.getButton(2) == True or key.getKey("2") == True:
                 print("Controlbox red")  
-            elif btn.getButton(3) == True:
+            
+            if btn.getButton(3) == True or key.getKey("3") == True:
                 #print("Player1 black")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(1, "up")
-            elif btn.getButton(4) == True:
+            
+            if btn.getButton(4) == True or key.getKey("4") == True:
                 #print("Player1 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(1, "down")
-            elif btn.getButton(5) == True:
+            
+            if btn.getButton(5) == True or key.getKey("5") == True:
                 #print("Player2 black")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "up")
-            elif btn.getButton(6) == True:
+            
+            if btn.getButton(6) == True or key.getKey("6") == True:
                 #print("Player2 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "down")
             
-            time.sleep(0.1)
+            time.sleep(0.01)
               
     def startGUI(self):
         # Start the GUI
@@ -191,7 +170,6 @@ if __name__ == "__main__":
     # Start a thread to check if a game is running 
     piGameConsole.keepRunning = True
     thread.start_new_thread(piGameConsole.checkRunning, ())
-    thread.start_new_thread(piGameConsole.keyboardInput, ())
-    thread.start_new_thread(piGameConsole.buttonInput, ())
+    thread.start_new_thread(piGameConsole.checkInput, ())
     
     piGameConsole.startGUI()

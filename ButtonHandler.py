@@ -4,7 +4,12 @@ Created on Nov 7, 2017
 @author: frank
 '''
 
-import RPi.GPIO as GPIO # pip install RPi.GPIO
+try:
+    import RPi.GPIO as GPIO # pip install RPi.GPIO       
+    gpioAvailable = True     
+except ImportError:
+    gpioAvailable = False
+    
 import time
 
 class ButtonHandler():
@@ -16,29 +21,34 @@ class ButtonHandler():
     port_player2_green = 21
     port_player2_red = 20
     
-    GPIO.setmode(GPIO.BCM)
-    
-    GPIO.setup(port_controller_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_controller_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_player1_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_player1_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_player2_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(port_player2_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    if gpioAvailable:
+        GPIO.setmode(GPIO.BCM)
+        
+        GPIO.setup(port_controller_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(port_controller_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(port_player1_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(port_player1_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(port_player2_green, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(port_player2_red, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         
     def getButton(self, buttonNumber):
-        # Return the button state        
-        if buttonNumber == 1:
-            return (0 if GPIO.input(self.port_controller_green) == 1 else 1)
-        elif buttonNumber == 2:
-            return GPIO.input(self.port_controller_red)
-        elif buttonNumber == 3:
-            return (0 if GPIO.input(self.port_player1_green) == 1 else 1)
-        elif buttonNumber == 4:
-            return GPIO.input(self.port_player1_red)
-        elif buttonNumber == 5:
-            return (0 if GPIO.input(self.port_player2_green) == 1 else 1)
-        elif buttonNumber == 6:
-            return GPIO.input(self.port_player2_red)
+        # Return the button state      
+        
+        if gpioAvailable == False:
+            return 0  
+        else:
+            if buttonNumber == 1:
+                return (0 if GPIO.input(self.port_controller_green) == 1 else 1)
+            elif buttonNumber == 2:
+                return GPIO.input(self.port_controller_red)
+            elif buttonNumber == 3:
+                return (0 if GPIO.input(self.port_player1_green) == 1 else 1)
+            elif buttonNumber == 4:
+                return GPIO.input(self.port_player1_red)
+            elif buttonNumber == 5:
+                return (0 if GPIO.input(self.port_player2_green) == 1 else 1)
+            elif buttonNumber == 6:
+                return GPIO.input(self.port_player2_red)
         
 if __name__ == "__main__":
     
