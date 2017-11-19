@@ -23,14 +23,12 @@ class PongGui(tk.Frame):
     player2 = ""
     player2_score = 0
     player2_score_label = ""
-    PADDLE_MOVEMENT = 100
-    REFRESH_TIME = 100
     WIDTH = 0
     HEIGHT = 0
     
     PLAYER_OFFSET = 10
     PLAYER_WIDTH = 20
-    PLAYER_HEIGHT = 100
+    PLAYER_HEIGHT = 1
     
     def __init__(self, parent, w, h):
         tk.Frame.__init__(self, parent)
@@ -39,7 +37,7 @@ class PongGui(tk.Frame):
         self.WIDTH = w
         self.HEIGHT = h
         self.PADDLE_MOVEMENT = 5
-        self.REFRESH_TIME = 10  # milliseconds
+        self.REFRESH_TIME = 10 # milliseconds
         
         # Game variables
         player1_score = 0
@@ -55,13 +53,13 @@ class PongGui(tk.Frame):
         self.canvas.pack(side="bottom", fill="x", padx=4)
         
         # Keep a reference for the GUI elements
-        self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="white")
-        self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="white")
+        self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="green")
+        self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="green")
         self.ball = None  # Set this variable up for reset_ball()
         
         # Ball acceleration (set in reset_ball())
-        dx = 0
-        dy = 0
+        self.dx = 0
+        self.dy = 0
         
         # Let's play!
         self.reset_ball()
@@ -93,6 +91,8 @@ class PongGui(tk.Frame):
                 self.canvas.move(self.player1, 0, movement)
             elif playerNumber == 2:
                 self.canvas.move(self.player2, 0, movement)
+
+	    self.canvas.update()
         
         except:
             print "move error"
