@@ -14,8 +14,8 @@ class PongGui(tk.Frame):
     
     canvas = None
     ball = None
-    dx = 20
-    dy = 20
+    dx = 30
+    dy = 30
     flip_y = 0
     player1 = None
     player1_score = 0
@@ -23,8 +23,8 @@ class PongGui(tk.Frame):
     player2 = ""
     player2_score = 0
     player2_score_label = ""
-    PADDLE_MOVEMENT = 25
-    REFRESH_TIME = 0
+    PADDLE_MOVEMENT = 100
+    REFRESH_TIME = 100
     WIDTH = 0
     HEIGHT = 0
     

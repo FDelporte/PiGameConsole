@@ -41,11 +41,11 @@ class PiGameConsole():
         key = KeyReader()
         
         while (piGameConsole.consoleRunning):            
-            if btn.getButton(1) == True or key.getKey("1") == True:
-                print("Controlbox black")  
+            #if btn.getButton(1) == True or key.getKey("1") == True:
+            #    print("Controlbox black")  
             
-            if btn.getButton(2) == True or key.getKey("2") == True:
-                print("Controlbox red")  
+            #if btn.getButton(2) == True or key.getKey("2") == True:
+            #    print("Controlbox red")  
             
             if btn.getButton(3) == True or key.getKey("3") == True:
                 #print("Player1 black")  
@@ -67,7 +67,7 @@ class PiGameConsole():
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move(2, "down")
             
-            time.sleep(0.01)
+            time.sleep(0.1)
               
     def startGUI(self):
         # Start the GUI
@@ -98,7 +98,7 @@ class PiGameConsole():
         slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   '''
         
     def startPong(self):        
-        self.pong = PongGui(self.win, 1400, 960)
+        self.pong = PongGui(self.win, 600, 500)
         self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
         
         self.pongBusy = True 

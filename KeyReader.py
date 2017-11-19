@@ -17,10 +17,13 @@ class KeyReader():
     
     def getKey(self, key):
         # Return the key pressed state          
-        if keyboard.is_pressed(key) == False:
-            return 0  
-        else:    
-            return 1
+        if keyAvailable == False:
+	    return 0
+	else:
+	    if keyAvailable == True and keyboard.is_pressed(key) == False:
+               return 0  
+            else:    
+               return 1
         
 if __name__ == "__main__":
     
