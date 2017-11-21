@@ -97,7 +97,7 @@ class PongGui(tk.Frame):
             elif playerNumber == 2:
                 self.canvas.move(self.player2, 0, movement)
 
-            self.canvas.update()
+            #self.canvas.update()
         
         except:
             print "move error"
