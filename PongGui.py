@@ -36,6 +36,7 @@ class PongGui(tk.Frame):
 
     PADDLE_MOVEMENT = 25
     REFRESH_TIME = 5 # milliseconds
+    INCREASE_SPEED = 1.0005
     
     def __init__(self, parent, w, h):
         tk.Frame.__init__(self, parent)
@@ -103,7 +104,7 @@ class PongGui(tk.Frame):
             print "move error"
     
     def move_ball(self):    
-        self.speedIncrease = self.speedIncrease * 1.001
+        self.speedIncrease = self.speedIncrease * self.INCREASE_SPEED
         
         self.canvas.move(self.ball, self.dx * self.speedIncrease, self.dy * self.speedIncrease)    
         
