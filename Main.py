@@ -50,22 +50,22 @@ class PiGameConsole():
             if btn.getButton(3) == True or key.getKey("3") == True:
                 #print("Player1 black")  
                 if self.pongBusy == True and self.pong != None:
-                    self.pong.move(1, "up")
+                    self.pong.move_player(1, "up")
             
             if btn.getButton(4) == True or key.getKey("4") == True:
                 #print("Player1 red")  
                 if self.pongBusy == True and self.pong != None:
-                    self.pong.move(1, "down")
+                    self.pong.move_player(1, "down")
             
             if btn.getButton(5) == True or key.getKey("5") == True:
                 #print("Player2 black")  
                 if self.pongBusy == True and self.pong != None:
-                    self.pong.move(2, "up")
+                    self.pong.move_player(2, "up")
             
             if btn.getButton(6) == True or key.getKey("6") == True:
                 #print("Player2 red")  
                 if self.pongBusy == True and self.pong != None:
-                    self.pong.move(2, "down")
+                    self.pong.move_player(2, "down")
             
             time.sleep(0.1)
               
