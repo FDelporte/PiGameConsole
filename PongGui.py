@@ -77,6 +77,9 @@ class PongGui(tk.Frame):
     def get(self):
         return self.canvas.get()
     
+    def stop(self):
+        print "Stop Pong"
+    
     def move_player(self, playerNumber, direction):    
         try:
             coords = self.canvas.coords(self.player1)

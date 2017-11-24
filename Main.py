@@ -17,9 +17,11 @@ class PiGameConsole():
     
     consoleRunning = True
     pongBusy = False
+    slideShowBusy = False
     keepRunning = False
     
     win = None
+    slideShow = None
     pong = None
         
     def __init__(self):
@@ -39,12 +41,17 @@ class PiGameConsole():
         btn = ButtonHandler()
         key = KeyReader()
         
-        while (piGameConsole.consoleRunning):            
-            #if btn.getButton(1) == True or key.getKey("1") == True:
-            #    print("Controlbox black")  
+        while (self.consoleRunning):            
+            if btn.getButton(1) == True or key.getKey("1") == True:
+                if self.slideShowBusy == True and self.slideShow != None:
+                    self.slideShow.stop()
+                    self.startPong()
+                elif self.pongBusy == True and self.pong != None:
+                    self.pong.stop()
+                    self.startSlideShow()                    
             
-            #if btn.getButton(2) == True or key.getKey("2") == True:
-            #    print("Controlbox red")  
+            if btn.getButton(2) == True or key.getKey("2") == True:
+                print("Controlbox red")  
             
             if btn.getButton(3) == True or key.getKey("3") == True:
                 #print("Player1 black")  
@@ -96,6 +103,9 @@ class PiGameConsole():
         slideShow = SlideShow(self.win, 1400, 960)
         slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))
         
+        self.slideShowBusy = True
+        self.pongBusy = False
+        
     def startPong(self):        
         self.showButtonControls(2)
         self.showMenu(2)
@@ -103,6 +113,7 @@ class PiGameConsole():
         self.pong = PongGui(self.win, 600, 500)
         self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
         
+        self.slideShowBusy = False
         self.pongBusy = True 
                 
     def showMenu(self, item):      
@@ -116,27 +127,25 @@ class PiGameConsole():
         Label(menuFrame, text=(">>>" if item == 2 else ""), font=('', 18), fg="blue").grid(row = 2, column = 0, sticky=tk.W)
         Label(menuFrame, text="Pong", font=('', 18)).grid(row = 2, column = 1, sticky=tk.W)
         
-    def showButtonControls(self, type):
+    def showButtonControls(self, menuType):
         controlFrame = Frame(self.win)
         controlFrame.grid(row = 1, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
         
         txtLabel = ""
         txtControllerA = ""
-        txtControllerA = ""
+        txtControllerB = ""
         txtPlayer1A = ""
         txtPlayer1B = ""
         txtPlayer2A = ""
         txtPlayer2B = ""
         
-        if type == 1:
+        if menuType == 1:
             txtLabel = "Maak uw keuze"
-            txtControllerA = "Spel kiezen"
-            txtControllerB = "Starten"
+            txtControllerA = "Start Pong"
         
-        elif type == 2:
+        elif menuType == 2:
             txtLabel = "Pong"
-            txtControllerA = "Terug naar hoofdmenu"
-            txtControllerB = ""
+            txtControllerA = "Stop Pong"
             txtPlayer1A = "Op"
             txtPlayer1B = "Neer"
             txtPlayer2A = "Op"

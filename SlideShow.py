@@ -34,8 +34,16 @@ class SlideShow(tk.Frame):
     def get(self):
         return self.canvas.get()
     
+    def stop(self):
+        print "Stop Slideshow"
+    
     def showImage(self):
-        '''img = ImageTk.PhotoImage(Image.open(self.image_files[self.current_image]))
+        '''
+        img = ImageTk.PhotoImage(Image.open(self.image_files[self.current_image]))
         
         self.current_image = self.current_image + 1
-        imgLbl = Label(self.canvas, image = img)'''
+
+        imgLbl = Label(self.canvas, image = img)
+
+        '''
+
