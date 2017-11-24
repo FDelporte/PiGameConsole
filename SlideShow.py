@@ -4,7 +4,7 @@ from itertools import cycle
 from Tkinter import *
 
 import PIL.Image # pip install pillow
-import PIL.ImageTk
+#import PIL.ImageTk
 
 class SlideShow(tk.Frame):
     
@@ -35,7 +35,7 @@ class SlideShow(tk.Frame):
         return self.canvas.get()
     
     def showImage(self):
-        img = ImageTk.PhotoImage(Image.open(self.image_files[self.current_image]))
+        '''img = ImageTk.PhotoImage(Image.open(self.image_files[self.current_image]))
         
         self.current_image = self.current_image + 1
-        imgLbl = Label(self.canvas, image = img)
+        imgLbl = Label(self.canvas, image = img)'''

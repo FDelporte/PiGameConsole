@@ -3,7 +3,6 @@ Created on 22/09/2017
 
 @author: Frank Delporte
 '''
-
 import thread
 import Tkinter as tk
 import tkFont
@@ -12,7 +11,7 @@ import time
 from ButtonHandler import *
 from KeyReader import *
 from PongGui import *
-#from SlideShow import *
+from SlideShow import *
 
 class PiGameConsole():
     
@@ -85,19 +84,22 @@ class PiGameConsole():
         #exitButton = tk.Button(self.win, text="Quit", font=myFont, command=exitProgram, bg="grey", height=1, width=24)
         #exitButton.grid(row = 0, sticky=tk.NSEW)
         
-        self.showButtonControls(1)
-        self.showMenu(1)
-        
-        #self.startSlideShow()
-        self.startPong()
+        self.startSlideShow()
+        #self.startPong()
         
         self.win.mainloop()
         
-    '''def startSlideShow(self):
+    def startSlideShow(self):    
+        self.showButtonControls(1)
+        self.showMenu(1)
+        
         slideShow = SlideShow(self.win, 1400, 960)
-        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))   '''
+        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))
         
     def startPong(self):        
+        self.showButtonControls(2)
+        self.showMenu(2)
+        
         self.pong = PongGui(self.win, 600, 500)
         self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
         
