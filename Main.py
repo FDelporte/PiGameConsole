@@ -96,17 +96,27 @@ class PiGameConsole():
         
         self.win.mainloop()
         
-    def startSlideShow(self):    
+    def clearWindow(self):
+        for child in self.win.winfo_children():
+            child.destroy()
+            
+        self.win.update()
+        
+    def startSlideShow(self):          
+        self.clearWindow()
+        
         self.showButtonControls(1)
         self.showMenu(1)
         
-        slideShow = SlideShow(self.win, 1400, 960)
-        slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))
+        self.slideShow = SlideShow(self.win, 1400, 960)
+        self.slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))
         
         self.slideShowBusy = True
         self.pongBusy = False
         
     def startPong(self):        
+        self.clearWindow()
+        
         self.showButtonControls(2)
         self.showMenu(2)
         
