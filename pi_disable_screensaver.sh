@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=57552
+# or apply settings described here
+# http://www.etcwiki.org/wiki/Disable_screensaver_and_screen_blanking_Raspberry_Pi
 
 NOBLANK="
 @xset s noblank
