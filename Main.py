@@ -12,14 +12,20 @@ from ButtonHandler import *
 from KeyReader import *
 from PongGui import *
 from SlideShow import *
+from ConsoleMenu import *
+from Legend import *
 
 class PiGameConsole():
     
+    # general vars
     consoleRunning = True
     pongBusy = False
     slideShowBusy = False
     keepRunning = False
     
+    # frame holders
+    menu = None
+    legend = None
     win = None
     slideShow = None
     pong = None
@@ -87,102 +93,52 @@ class PiGameConsole():
             consoleRunning = False
             print "Finished"
             self.win.quit()
+            
+        self.menu = ConsoleMenu(self.win, 300, 250)
+        self.menu.grid(row = 0, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
         
-        #exitButton = tk.Button(self.win, text="Quit", font=myFont, command=exitProgram, bg="grey", height=1, width=24)
-        #exitButton.grid(row = 0, sticky=tk.NSEW)
+        self.legend = Legend(self.win, 300, 400)
+        self.legend.grid(row = 1, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
         
         self.startSlideShow()
-        #self.startPong()
         
         self.win.mainloop()
         
-    def clearWindow(self):
-        for child in self.win.winfo_children():
-            child.destroy()
+    def clearWindow(self):  
+        if self.slideShow != None:
+            self.slideShow.stop()            
+            self.slideShow = None
             
-        self.win.update()
+        if self.pong != None:
+            self.pong.stop()            
+            self.pong = None
+            
+        self.slideShowBusy = False
+        self.pongBusy = False
+        
+        time.sleep(0.5)
         
     def startSlideShow(self):          
         self.clearWindow()
         
-        self.showButtonControls(1)
-        self.showMenu(1)
+        self.menu.setSelected(1)
+        self.legend.setLegend(1)
         
-        self.slideShow = SlideShow(self.win, 1400, 960)
+        self.slideShow = SlideShow(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 100)
         self.slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))
         
         self.slideShowBusy = True
-        self.pongBusy = False
-        
+                
     def startPong(self):        
         self.clearWindow()
         
-        self.showButtonControls(2)
-        self.showMenu(2)
+        self.menu.setSelected(2)
+        self.legend.setLegend(2)
         
-        self.pong = PongGui(self.win, 600, 500)
+        self.pong = PongGui(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 100)
         self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
-        
-        self.slideShowBusy = False
-        self.pongBusy = True 
                 
-    def showMenu(self, item):      
-        menuFrame = Frame(self.win)
-        menuFrame.grid(row = 0, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))   
-        
-        Label(menuFrame, text="Menu", font=('', 20)).grid(row = 0, column = 0, columnspan = 2, sticky=tk.W)
-        
-        Label(menuFrame, text=(">>>" if item == 1 else ""), font=('', 18), fg="blue").grid(row = 1, column = 0, sticky=tk.W)
-        Label(menuFrame, text="Infokrant", font=('', 18)).grid(row = 1, column = 1, sticky=tk.W)
-        Label(menuFrame, text=(">>>" if item == 2 else ""), font=('', 18), fg="blue").grid(row = 2, column = 0, sticky=tk.W)
-        Label(menuFrame, text="Pong", font=('', 18)).grid(row = 2, column = 1, sticky=tk.W)
-        
-    def showButtonControls(self, menuType):
-        controlFrame = Frame(self.win)
-        controlFrame.grid(row = 1, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
-        
-        txtLabel = ""
-        txtControllerA = ""
-        txtControllerB = ""
-        txtPlayer1A = ""
-        txtPlayer1B = ""
-        txtPlayer2A = ""
-        txtPlayer2B = ""
-        
-        if menuType == 1:
-            txtLabel = "Maak uw keuze"
-            txtControllerA = "Start Pong"
-        
-        elif menuType == 2:
-            txtLabel = "Pong"
-            txtControllerA = "Stop Pong"
-            txtPlayer1A = "Op"
-            txtPlayer1B = "Neer"
-            txtPlayer2A = "Op"
-            txtPlayer2B = "Neer"
-            
-        Label(controlFrame, text=txtLabel, font=('', 20)).grid(row = 0, column = 0, columnspan = 2, sticky=tk.W)
-        
-        Label(controlFrame, text="Controller", font=('', 18)).grid(row = 1, column = 0, columnspan = 2, sticky=tk.W)
-        
-        Label(controlFrame, text=("Rood" if txtControllerA != "" else ""), font=('', 14), fg="red").grid(row = 2, column = 0, sticky=tk.W)
-        Label(controlFrame, text=txtControllerA, font=('', 14)).grid(row = 2, column = 1, sticky=tk.W)
-        Label(controlFrame, text=("Groen" if txtControllerB != "" else ""), font=('', 14), fg="green").grid(row = 3, column = 0, sticky=tk.W)
-        Label(controlFrame, text=txtControllerB, font=('', 14)).grid(row = 3, column = 1, sticky=tk.W)
-        
-        Label(controlFrame, text=("Speler 1" if txtPlayer1A != "" and txtPlayer1A != "" else ""), font=('', 14)).grid(row = 4, column = 0, columnspan = 2, sticky=tk.W)
-        
-        Label(controlFrame, text=("Rood" if txtPlayer1A != "" else ""), font=('', 14), fg="red").grid(row = 5, column = 0, sticky=tk.W)
-        Label(controlFrame, text=txtPlayer1A, font=('', 14)).grid(row = 5, column = 1, sticky=tk.W)
-        Label(controlFrame, text=("Groen" if txtPlayer1B != "" else ""), font=('', 14), fg="green").grid(row = 6, column = 0, sticky=tk.W)
-        Label(controlFrame, text=txtPlayer1B, font=('', 14)).grid(row = 6, column = 1, sticky=tk.W)
-        
-        Label(controlFrame, text=("Speler 2" if txtPlayer2A != "" and txtPlayer2A != "" else ""), font=('', 14)).grid(row = 7, column = 0, columnspan = 2, sticky=tk.W)
-        
-        Label(controlFrame, text=("Rood" if txtPlayer2A != "" else ""), font=('', 14), fg="red").grid(row = 8, column = 0, sticky=tk.W)
-        Label(controlFrame, text=txtPlayer2A, font=('', 14)).grid(row = 8, column = 1, sticky=tk.W)
-        Label(controlFrame, text=("Groen" if txtPlayer2B != "" else ""), font=('', 14), fg="green").grid(row = 9, column = 0, sticky=tk.W)
-        Label(controlFrame, text=txtPlayer2B, font=('', 14)).grid(row = 9, column = 1, sticky=tk.W)
+        self.pongBusy = True 
     
 if __name__ == "__main__":
     

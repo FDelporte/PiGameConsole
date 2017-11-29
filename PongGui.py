@@ -27,7 +27,7 @@ class PongGui(tk.Frame):
     speedIncrease = 1
     wasOverlapping = False
     
-    refreshJob = None
+    stopGame = False
     
     WIDTH = 0
     HEIGHT = 0
@@ -41,47 +41,58 @@ class PongGui(tk.Frame):
     INCREASE_SPEED = 1.0005
     
     def __init__(self, parent, w, h):
-        tk.Frame.__init__(self, parent)
         
-        # Window dimensions and other constants
-        self.WIDTH = w
-        self.HEIGHT = h
-        
-        # Game variables
-        self.player1_score = 0
-        self.player2_score = 0
-        
-        # The Tk labels to show the score
-        self.player1_score_label = None
-        self.player2_score_label = None
-        
-        # Set up the GUI window via Tk        
-        self.canvas = Canvas(self, background="blue", width=self.WIDTH, height=self.HEIGHT)
-        self.canvas.create_line((self.WIDTH / 2, 0, self.WIDTH / 2, self.HEIGHT), fill="white")
-        self.canvas.pack(side="bottom", fill="x", padx=4)
-        
-        # Keep a reference for the GUI elements
-        self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
-        self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
-        self.ball = None  # Set this variable up for reset_ball()
-        
-        # Ball acceleration (set in reset_ball())
-        self.dx = 0
-        self.dy = 0
-        
-        # Let's play!
-        self.reset_ball()
-        
-        self.refreshJob = self.after(self.REFRESH_TIME, self.refresh)
-        
-        print "Pong started"
+        try:
+            
+            tk.Frame.__init__(self, parent)
+            
+            # Window dimensions and other constants
+            self.WIDTH = w
+            self.HEIGHT = h
+            
+            # Game variables
+            self.player1_score = 0
+            self.player2_score = 0
+            
+            # The Tk labels to show the score
+            self.player1_score_label = None
+            self.player2_score_label = None
+            
+            # Set up the GUI window via Tk        
+            self.canvas = Canvas(self, background="blue", width=self.WIDTH, height=self.HEIGHT)
+            self.canvas.create_line((self.WIDTH / 2, 0, self.WIDTH / 2, self.HEIGHT), fill="white")
+            self.canvas.pack(side="bottom", fill="x", padx=4)
+            
+            # Keep a reference for the GUI elements
+            self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
+            self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
+            self.ball = None  # Set this variable up for reset_ball()
+            
+            # Ball acceleration (set in reset_ball())
+            self.dx = 0
+            self.dy = 0
+            
+            # Let's play!
+            self.reset_ball()
+            self.show_scores()
+            
+            self.refreshJob = self.after(self.REFRESH_TIME, self.refresh)
+            
+            print "Pong started"
+
+        except:
+            
+            print "Could not initiate"
 
     def get(self):
         return self.canvas.get()
     
     def stop(self):
-        self.refreshJob.stop()
-    
+        try:
+            self.stopGame = True
+        except:
+            print "stopped already"
+            
     def move_player(self, playerNumber, direction):    
         try:
             coords = self.canvas.coords(self.player1)
@@ -173,7 +184,7 @@ class PongGui(tk.Frame):
             self.show_scores()
         
             if self.player2_score >= 3:
-                self.show_label(2, "WINNER", False)
+                self.show_label(2, "WINNAAR", False)
                 self.stop()
             else:
                 self.show_label(2, "GOAL!!!", True)
@@ -184,7 +195,7 @@ class PongGui(tk.Frame):
             self.show_scores()
             
             if self.player1_score >= 3:
-                self.show_label(1, "WINNER", False)
+                self.show_label(1, "WINNAAR", False)
                 self.stop()
             else:
                 self.show_label(1, "GOAL!!!", True)
@@ -207,4 +218,5 @@ class PongGui(tk.Frame):
             else:
                 self.wasOverlapping = False
     
-        self.master.after(self.REFRESH_TIME, self.refresh)
+        if self.stopGame == False:
+            self.after(self.REFRESH_TIME, self.refresh)
