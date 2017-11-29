@@ -88,10 +88,7 @@ class PongGui(tk.Frame):
         return self.canvas.get()
     
     def stop(self):
-        try:
-            self.stopGame = True
-        except:
-            print "stopped already"
+        self.stopGame = True
             
     def move_player(self, playerNumber, direction):    
         try:
