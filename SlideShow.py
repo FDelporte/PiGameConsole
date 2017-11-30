@@ -2,7 +2,7 @@ import Tkinter as tk
 
 from itertools import cycle
 from Tkinter import *
-from PIL import Image, ImageTk # pip install pillow
+from PIL import Image, ImageTk # pip install pillow + sudo apt-get install python-imaging-tk
 
 # based on example found on 
 # https://raspberrypi.stackexchange.com/questions/18261/how-do-i-display-an-image-file-png-in-a-simple-window
@@ -26,9 +26,9 @@ class SlideShow(tk.Frame):
         
         # pick an image file you have .bmp  .jpg  .gif.  .png
         # load the file and covert it to a Tkinter image object
-        self.image1 = ImageTk.PhotoImage(Image.open('E:\\GIT\\PiGameConsole\\test_pictures\\somewhere-in-the-hills-121.jpg'))
-        self.image2 = ImageTk.PhotoImage(Image.open('E:\\GIT\\PiGameConsole\\test_pictures\\golden-nature-2336.jpg'))
-        self.image3 = ImageTk.PhotoImage(Image.open('E:\\GIT\\PiGameConsole\\test_pictures\\sunset-2165.jpg'))
+        self.image1 = ImageTk.PhotoImage(Image.open('test_pictures/somewhere-in-the-hills-121.jpg'))
+        self.image2 = ImageTk.PhotoImage(Image.open('test_pictures/golden-nature-2336.jpg'))
+        self.image3 = ImageTk.PhotoImage(Image.open('test_pictures/sunset-2165.jpg'))
 
         # make the root window the size of the image
         #self.canvas.geometry("%dx%d+%d+%d" % (w, h, 0, 0))
