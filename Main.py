@@ -15,10 +15,16 @@ from SlideShow import *
 from ConsoleMenu import *
 from Legend import *
 
+try:
+    import keyboard # pip install keyboard
+    
+    keyAvailable = True     
+except ImportError:
+    keyAvailable = False
+
 class PiGameConsole():
     
     # general vars
-    consoleRunning = True
     pongBusy = False
     slideShowBusy = False
     keepRunning = False
@@ -32,23 +38,24 @@ class PiGameConsole():
         
     def __init__(self):
         print("PiGameConsole initiated")
-
-    def checkRunning(self):
+              
+    def preventScreensaver(self):
         
         while (self.keepRunning):
-            # if no game is busy start advertisements
             
-            # check https://www.daniweb.com/programming/software-development/code/468841/tkinter-image-slide-show-python
+            keyboard.write('A', delay=0)
             
-            time.sleep(1)
+            time.sleep(10)
             
     def checkInput(self):
         
         btn = ButtonHandler()
         key = KeyReader()
         
-        while (self.consoleRunning):            
-            if btn.getButton(1) == True or key.getKey("1") == True:
+        while (self.keepRunning):    
+                    
+            if btn.getButton(2) == True or key.getKey("1") == True:
+                #print("Controller red")  
                 if self.slideShowBusy == True and self.slideShow != None:
                     self.slideShow.stop()
                     self.startPong()
@@ -56,26 +63,27 @@ class PiGameConsole():
                     self.pong.stop()
                     self.startSlideShow()                    
             
-            if btn.getButton(2) == True or key.getKey("2") == True:
-                print("Controlbox red")  
+            if btn.getButton(1) == True or key.getKey("2") == True:
+                #print("Controller green")  
+                print("Controller green")  
             
-            if btn.getButton(3) == True or key.getKey("3") == True:
-                #print("Player1 black")  
+            if btn.getButton(4) == True or key.getKey("3") == True:
+                #print("Player1 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move_player(1, "up")
             
-            if btn.getButton(4) == True or key.getKey("4") == True:
-                #print("Player1 red")  
+            if btn.getButton(3) == True or key.getKey("4") == True:
+                #print("Player1 green")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move_player(1, "down")
             
-            if btn.getButton(5) == True or key.getKey("5") == True:
-                #print("Player2 black")  
+            if btn.getButton(6) == True or key.getKey("5") == True:
+                #print("Player2 red")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move_player(2, "up")
             
-            if btn.getButton(6) == True or key.getKey("6") == True:
-                #print("Player2 red")  
+            if btn.getButton(5) == True or key.getKey("6") == True:
+                #print("Player2 green")  
                 if self.pongBusy == True and self.pong != None:
                     self.pong.move_player(2, "down")
             
@@ -90,8 +98,10 @@ class PiGameConsole():
         myFont = tkFont.Font(family="Helvetica", size=12, weight="bold")
         
         def exitProgram():
-            consoleRunning = False
+            
+            self.keepRunning = False
             print "Finished"
+            
             self.win.quit()
             
         self.menu = ConsoleMenu(self.win, 300, 250)
@@ -146,7 +156,7 @@ if __name__ == "__main__":
         
     # Start a thread to check if a game is running 
     piGameConsole.keepRunning = True
-    thread.start_new_thread(piGameConsole.checkRunning, ())
+    thread.start_new_thread(piGameConsole.preventScreensaver, ())
     thread.start_new_thread(piGameConsole.checkInput, ())
     
     piGameConsole.startGUI()
