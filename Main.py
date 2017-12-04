@@ -43,7 +43,8 @@ class PiGameConsole():
         
         while (self.keepRunning):
             
-            keyboard.write('A', delay=0)
+            if self.keyAvailable == True:
+                keyboard.write('A', delay=0)
             
             time.sleep(10)
             
