@@ -40,6 +40,8 @@ class PongGui(tk.Frame):
     REFRESH_TIME = 5 # milliseconds
     INCREASE_SPEED = 1.0005
     
+    countdown = 0
+    
     def __init__(self, parent, w, h):
         
         try:
@@ -59,7 +61,7 @@ class PongGui(tk.Frame):
             self.player2_score_label = None
             
             # Set up the GUI window via Tk        
-            self.canvas = Canvas(self, background="blue", width=self.WIDTH, height=self.HEIGHT)
+            self.canvas = Canvas(self, background="darkblue", width=self.WIDTH, height=self.HEIGHT)
             self.canvas.create_line((self.WIDTH / 2, 0, self.WIDTH / 2, self.HEIGHT), fill="white")
             self.canvas.pack(side="bottom", fill="x", padx=4)
             
@@ -72,10 +74,14 @@ class PongGui(tk.Frame):
             self.dx = 0
             self.dy = 0
             
-            # Let's play!
+            # Prepare the game
             self.reset_ball()
             self.show_scores()
             
+            # Countdown
+            self.countdown = 5
+            
+            # Start refresh
             self.refreshJob = self.after(self.REFRESH_TIME, self.refresh)
             
             print "Pong started"
@@ -155,7 +161,7 @@ class PongGui(tk.Frame):
             placeX = (self.WIDTH / 2) + 300
         
         for k in range(1, 6):
-            goal_label = self.canvas.create_text(placeX, (self.HEIGHT / 2), text=showText, fill='green', font=('Arial', 60))
+            goal_label = self.canvas.create_text(placeX, (self.HEIGHT / 2), text=showText, fill='yellow', font=('Arial', 60))
             self.canvas.update()
             
             time.sleep(0.4)
@@ -166,54 +172,64 @@ class PongGui(tk.Frame):
             time.sleep(0.1)
             
         if clearAtEnd == False:
-            goal_label = self.canvas.create_text(placeX, (self.HEIGHT / 2), text=showText, fill='green', font=('Arial', 60))
+            goal_label = self.canvas.create_text(placeX, (self.HEIGHT / 2), text=showText, fill='yellow', font=('Arial', 60))
         
     def refresh(self):
-        """
-        This is the method which updates all elements in the game.
-        """    
-        self.move_ball()
-        
-        ball_coords = self.canvas.coords(self.ball)
-    
-        if ball_coords[0] < 0:
-            self.player2_score = self.player2_score + 1
-            self.show_scores()
-        
-            if self.player2_score >= 3:
-                self.show_label(2, "WINNAAR", False)
-                self.stop()
-            else:
-                self.show_label(2, "GOAL!!!", True)
-                self.reset_ball()
+        if self.countdown > 0:
             
-        elif ball_coords[0] > self.WIDTH:
-            self.player1_score = self.player1_score + 1
-            self.show_scores()
+            countdown_label = self.canvas.create_text((self.WIDTH / 2), (self.HEIGHT / 2) - 50, text=str(self.countdown), fill='yellow', font=('Arial', 100))
+            self.canvas.update()
             
-            if self.player1_score >= 3:
-                self.show_label(1, "WINNAAR", False)
-                self.stop()
-            else:
-                self.show_label(1, "GOAL!!!", True)
-                self.reset_ball()
-    
-        if ball_coords[1] < 0 or ball_coords[3] > self.HEIGHT:
-            self.dy = -self.dy
-    
-        overlapping = self.canvas.find_overlapping(*ball_coords)
-    
-        if len(overlapping) > 1:
-            collided_item = overlapping[0]
-    
-            if collided_item == self.player1 or collided_item == self.player2:
-                # To prevent constant wiggling on top of the player box
-                if self.wasOverlapping == False:
-                    self.bounce_ball()
-                    
-                self.wasOverlapping = True
-            else:
-                self.wasOverlapping = False
+            time.sleep(1)
+            
+            self.canvas.delete(countdown_label)
+            self.canvas.update()
+            
+            self.countdown = self.countdown - 1
+            
+        else:
+            self.move_ball()
+            
+            ball_coords = self.canvas.coords(self.ball)
+        
+            if ball_coords[0] < 0:
+                self.player2_score = self.player2_score + 1
+                self.show_scores()
+            
+                if self.player2_score >= 3:
+                    self.show_label(2, "WINNAAR", False)
+                    self.stop()
+                else:
+                    self.show_label(2, "GOAL!!!", True)
+                    self.reset_ball()
+                
+            elif ball_coords[0] > self.WIDTH:
+                self.player1_score = self.player1_score + 1
+                self.show_scores()
+                
+                if self.player1_score >= 3:
+                    self.show_label(1, "WINNAAR", False)
+                    self.stop()
+                else:
+                    self.show_label(1, "GOAL!!!", True)
+                    self.reset_ball()
+        
+            if ball_coords[1] < 0 or ball_coords[3] > self.HEIGHT:
+                self.dy = -self.dy
+        
+            overlapping = self.canvas.find_overlapping(*ball_coords)
+        
+            if len(overlapping) > 1:
+                collided_item = overlapping[0]
+        
+                if collided_item == self.player1 or collided_item == self.player2:
+                    # To prevent constant wiggling on top of the player box
+                    if self.wasOverlapping == False:
+                        self.bounce_ball()
+                        
+                    self.wasOverlapping = True
+                else:
+                    self.wasOverlapping = False
     
         if self.stopGame == False:
             self.after(self.REFRESH_TIME, self.refresh)
