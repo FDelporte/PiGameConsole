@@ -43,7 +43,7 @@ class PiGameConsole():
         
         while (self.keepRunning):
             
-            if self.keyAvailable == True:
+            if keyAvailable == True:
                 keyboard.write('A', delay=0)
             
             time.sleep(10)
@@ -95,25 +95,26 @@ class PiGameConsole():
         self.win = tk.Tk()
         self.win.title("PI Gaming console")
         self.win.attributes("-fullscreen", True)
+                
+        self.exitButton = tk.Button(self.win, text = "Quit", command = self.exitProgram)
+        self.exitButton.grid(row = 0, column = 0, sticky=tk.NW, padx=(40, 0), pady=(40, 0))
         
-        myFont = tkFont.Font(family="Helvetica", size=12, weight="bold")
-        
-        def exitProgram():
-            
-            self.keepRunning = False
-            print "Finished"
-            
-            self.win.quit()
-            
         self.menu = ConsoleMenu(self.win, 300, 250)
-        self.menu.grid(row = 0, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
+        self.menu.grid(row = 1, column = 0, sticky=tk.NW, padx=(40, 40), pady=(0, 0))
         
         self.legend = Legend(self.win, 300, 400)
-        self.legend.grid(row = 1, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
+        self.legend.grid(row = 2, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
         
         self.startSlideShow()
         
         self.win.mainloop()
+        
+    def exitProgram(self):
+            
+        self.keepRunning = False
+        print "Finished"
+        
+        self.win.quit()
         
     def clearWindow(self):  
         if self.slideShow != None:
@@ -136,7 +137,7 @@ class PiGameConsole():
         self.legend.setLegend(1)
         
         self.slideShow = SlideShow(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 100)
-        self.slideShow.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))
+        self.slideShow.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(40, 40))
         
         self.slideShowBusy = True
                 
@@ -147,7 +148,7 @@ class PiGameConsole():
         self.legend.setLegend(2)
         
         self.pong = PongGui(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 100)
-        self.pong.grid(row = 0, column = 2, rowspan = 2, sticky=tk.NSEW, pady=(40, 40))    
+        self.pong.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(40, 40))    
                 
         self.pongBusy = True 
     
