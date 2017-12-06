@@ -26,9 +26,9 @@ class SlideShow(tk.Frame):
         
         # pick an image file you have .bmp  .jpg  .gif.  .png
         # load the file and covert it to a Tkinter image object
-        self.image1 = ImageTk.PhotoImage(Image.open('test_pictures/somewhere-in-the-hills-121.jpg'))
-        self.image2 = ImageTk.PhotoImage(Image.open('test_pictures/golden-nature-2336.jpg'))
-        self.image3 = ImageTk.PhotoImage(Image.open('test_pictures/sunset-2165.jpg'))
+        self.image1 = ImageTk.PhotoImage(Image.open('pictures/test1.jpg'))
+        self.image2 = ImageTk.PhotoImage(Image.open('pictures/test2.jpg'))
+        self.image3 = ImageTk.PhotoImage(Image.open('pictures/test3.jpg'))
 
         # make the root window the size of the image
         #self.canvas.geometry("%dx%d+%d+%d" % (w, h, 0, 0))
