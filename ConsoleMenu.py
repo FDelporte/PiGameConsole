@@ -15,7 +15,7 @@ class ConsoleMenu(tk.Frame):
         
         self.labelIndicication1 = StringVar()
         Label(self.canvas, textvariable=self.labelIndicication1, font=('', 18), fg="blue").grid(row = 1, column = 0, sticky=tk.W)
-        Label(self.canvas, text="Infokrant", font=('', 18)).grid(row = 1, column = 1, sticky=tk.W)
+        Label(self.canvas, text="Slideshow", font=('', 18)).grid(row = 1, column = 1, sticky=tk.W)
         
         self.labelIndicication2 = StringVar()
         Label(self.canvas, textvariable=self.labelIndicication2, font=('', 18), fg="blue").grid(row = 2, column = 0, sticky=tk.W)

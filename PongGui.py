@@ -14,8 +14,8 @@ class PongGui(tk.Frame):
     
     canvas = None
     ball = None
-    dx = 30
-    dy = 30
+    dx = 0
+    dy = 0
     flip_y = 0
     player1 = None
     player1_score = 0
@@ -37,8 +37,9 @@ class PongGui(tk.Frame):
     PLAYER_HEIGHT = 100
 
     PADDLE_MOVEMENT = 25
-    REFRESH_TIME = 5 # milliseconds
+    REFRESH_TIME = 10 # milliseconds
     INCREASE_SPEED = 1.0005
+    MAX_SCORE = 5
     
     countdown = 0
     
@@ -69,11 +70,7 @@ class PongGui(tk.Frame):
             self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.ball = None  # Set this variable up for reset_ball()
-            
-            # Ball acceleration (set in reset_ball())
-            self.dx = 0
-            self.dy = 0
-            
+                        
             # Prepare the game
             self.reset_ball()
             self.show_scores()
@@ -144,7 +141,7 @@ class PongGui(tk.Frame):
         
     def reset_ball(self):    
         self.flip_x = random.randint(0, 1) * 1
-        self.dx = random.randint(2, 3)
+        self.dx = random.randint(1, 5)
         self.dy = random.randint(1, 3)
         self.speedIncrease = 1
     
@@ -196,7 +193,7 @@ class PongGui(tk.Frame):
                 self.player2_score = self.player2_score + 1
                 self.show_scores()
             
-                if self.player2_score >= 3:
+                if self.player2_score >= self.MAX_SCORE:
                     self.show_label(2, "WINNAAR", False)
                     self.stop()
                 else:
@@ -207,7 +204,7 @@ class PongGui(tk.Frame):
                 self.player1_score = self.player1_score + 1
                 self.show_scores()
                 
-                if self.player1_score >= 3:
+                if self.player1_score >= self.MAX_SCORE:
                     self.show_label(1, "WINNAAR", False)
                     self.stop()
                 else:

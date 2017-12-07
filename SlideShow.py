@@ -15,7 +15,7 @@ class SlideShow(tk.Frame):
     
     stopShowing = False
     
-    SLIDE_DURATION = 5000
+    SLIDE_DURATION = 7500
     
     def __init__(self, parent, w, h):
         tk.Frame.__init__(self, parent)
@@ -26,9 +26,9 @@ class SlideShow(tk.Frame):
         
         # pick an image file you have .bmp  .jpg  .gif.  .png
         # load the file and covert it to a Tkinter image object
-        self.image1 = ImageTk.PhotoImage(Image.open('pictures/test1.jpg'))
-        self.image2 = ImageTk.PhotoImage(Image.open('pictures/test2.jpg'))
-        self.image3 = ImageTk.PhotoImage(Image.open('pictures/test3.jpg'))
+        self.image1 = ImageTk.PhotoImage(Image.open('pictures/ouderraad1.jpg'))
+        self.image2 = ImageTk.PhotoImage(Image.open('pictures/ouderraad2.jpg'))
+        self.image3 = ImageTk.PhotoImage(Image.open('pictures/ouderraad3.jpg'))
 
         # make the root window the size of the image
         #self.canvas.geometry("%dx%d+%d+%d" % (w, h, 0, 0))

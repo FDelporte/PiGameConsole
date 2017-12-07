@@ -16,7 +16,7 @@ class Legend(tk.Frame):
         self.labelTitle = StringVar()
         Label(self.canvas, textvariable=self.labelTitle, font=('', 20)).grid(row = 0, column = 0, columnspan = 2, sticky=tk.W)
         
-        Label(self.canvas, text="Controller", font=('', 18)).grid(row = 1, column = 0, columnspan = 2, sticky=tk.W)
+        Label(self.canvas, text="Controller", font=('', 14)).grid(row = 1, column = 0, columnspan = 2, sticky=tk.W)
         
         self.labelControllerRed = StringVar()
         Label(self.canvas, textvariable=self.labelControllerRed, font=('', 14), fg="red").grid(row = 2, column = 0, sticky=tk.W)
@@ -65,7 +65,7 @@ class Legend(tk.Frame):
             txtPlayer2B = ""
             
             if menuType == 1:
-                txtTitle = "Maak uw keuze"
+                txtTitle = "Slideshow"
                 txtControllerA = "Start Pong"
             
             elif menuType == 2:
