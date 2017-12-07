@@ -137,7 +137,7 @@ class PiGameConsole():
         self.legend.setLegend(1)
         
         self.slideShow = SlideShow(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 50)
-        self.slideShow.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(40, 40))
+        self.slideShow.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(10, 10))
         
         self.slideShowBusy = True
                 
@@ -148,7 +148,7 @@ class PiGameConsole():
         self.legend.setLegend(2)
         
         self.pong = PongGui(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 50)
-        self.pong.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(40, 40))    
+        self.pong.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(10, 10))    
                 
         self.pongBusy = True 
     
