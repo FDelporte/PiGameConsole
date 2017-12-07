@@ -97,13 +97,13 @@ class PiGameConsole():
         self.win.attributes("-fullscreen", True)
                 
         self.exitButton = tk.Button(self.win, text = "Quit", command = self.exitProgram)
-        self.exitButton.grid(row = 0, column = 0, sticky=tk.NW, padx=(40, 0), pady=(40, 0))
+        self.exitButton.grid(row = 0, column = 0, sticky=tk.NW, padx=(10, 0), pady=(10, 0))
         
         self.menu = ConsoleMenu(self.win, 300, 250)
-        self.menu.grid(row = 1, column = 0, sticky=tk.NW, padx=(40, 40), pady=(0, 0))
+        self.menu.grid(row = 1, column = 0, sticky=tk.NW, padx=(10, 10), pady=(0, 0))
         
         self.legend = Legend(self.win, 300, 400)
-        self.legend.grid(row = 2, column = 0, sticky=tk.NW, padx=(40, 40), pady=(40, 40))
+        self.legend.grid(row = 2, column = 0, sticky=tk.NW, padx=(10, 10), pady=(0, 0))
         
         self.startSlideShow()
         
@@ -136,7 +136,7 @@ class PiGameConsole():
         self.menu.setSelected(1)
         self.legend.setLegend(1)
         
-        self.slideShow = SlideShow(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 100)
+        self.slideShow = SlideShow(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 50)
         self.slideShow.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(40, 40))
         
         self.slideShowBusy = True
@@ -147,7 +147,7 @@ class PiGameConsole():
         self.menu.setSelected(2)
         self.legend.setLegend(2)
         
-        self.pong = PongGui(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 100)
+        self.pong = PongGui(self.win, self.win.winfo_screenwidth() - 300, self.win.winfo_screenheight() - 50)
         self.pong.grid(row = 0, column = 2, rowspan = 3, sticky=tk.NSEW, pady=(40, 40))    
                 
         self.pongBusy = True 

@@ -36,7 +36,7 @@ class PongGui(tk.Frame):
     PLAYER_WIDTH = 20
     PLAYER_HEIGHT = 100
 
-    PADDLE_MOVEMENT = 25
+    PADDLE_MOVEMENT = 35
     REFRESH_TIME = 10 # milliseconds
     INCREASE_SPEED = 1.0005
     MAX_SCORE = 5
@@ -68,7 +68,7 @@ class PongGui(tk.Frame):
             
             # Keep a reference for the GUI elements
             self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
-            self.player2 = self.canvas.create_rectangle((self.WIDTH - (self.PLAYER_OFFSET + self.PLAYER_WIDTH), (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
+            self.player2 = self.canvas.create_rectangle((self.WIDTH - self.PLAYER_WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.ball = None  # Set this variable up for reset_ball()
                         
             # Prepare the game
@@ -141,8 +141,8 @@ class PongGui(tk.Frame):
         
     def reset_ball(self):    
         self.flip_x = random.randint(0, 1) * 1
-        self.dx = random.randint(1, 5)
-        self.dy = random.randint(1, 3)
+        self.dx = random.randint(1, 3)
+        self.dy = random.randint(1, 2)
         self.speedIncrease = 1
     
         if self.flip_x == 1:
