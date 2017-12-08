@@ -39,6 +39,7 @@ class PongGui(tk.Frame):
     PADDLE_MOVEMENT = 35
     REFRESH_TIME = 10 # milliseconds
     INCREASE_SPEED = 1.0005
+    INCREASE_MAX = 1.1
     MAX_SCORE = 5
     
     countdown = 0
@@ -70,7 +71,7 @@ class PongGui(tk.Frame):
             self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.player2 = self.canvas.create_rectangle((self.WIDTH - self.PLAYER_WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.ball = None  # Set this variable up for reset_ball()
-                        
+        
             # Prepare the game
             self.reset_ball()
             self.show_scores()
@@ -122,6 +123,11 @@ class PongGui(tk.Frame):
     def move_ball(self):    
         self.speedIncrease = self.speedIncrease * self.INCREASE_SPEED
         
+        if self.speedIncrease > self.INCREASE_MAX:
+            self.speedIncrease = self.INCREASE_MAX
+        
+        print self.speedIncrease
+            
         self.canvas.move(self.ball, self.dx * self.speedIncrease, self.dy * self.speedIncrease)    
         
     def show_scores(self):    
@@ -132,8 +138,8 @@ class PongGui(tk.Frame):
         self.player2_score_label = self.canvas.create_text((self.WIDTH / 2) + 50, 40, text=self.player2_score, fill='white', font=('Arial', 30))
         
     def bounce_ball(self):  
-        self.dx = -self.dx * self.speedIncrease
-        self.dy = random.randint(1, 3) * self.speedIncrease
+        self.dx = -self.dx 
+        self.dy = random.randint(1, 3) 
         self.flip_y = random.randint(0, 1) * 1
     
         if self.flip_y:
@@ -187,8 +193,25 @@ class PongGui(tk.Frame):
         else:
             self.move_ball()
             
+            # location of the ball
             ball_coords = self.canvas.coords(self.ball)
+            
+            # check if ball touches player
+            overlapping = self.canvas.find_overlapping(*ball_coords)
         
+            if len(overlapping) > 1:
+                collided_item = overlapping[0]
+        
+                if collided_item == self.player1 or collided_item == self.player2:
+                    # To prevent constant wiggling on top of the player box
+                    if self.wasOverlapping == False:
+                        self.bounce_ball()
+                        
+                    self.wasOverlapping = True
+                else:
+                    self.wasOverlapping = False
+        
+            # check if the ball has hit left or right side
             if ball_coords[0] < 0:
                 self.player2_score = self.player2_score + 1
                 self.show_scores()
@@ -211,22 +234,9 @@ class PongGui(tk.Frame):
                     self.show_label(1, "GOAL!!!", True)
                     self.reset_ball()
         
+            # check if the ball has hit top or bottom side
             if ball_coords[1] < 0 or ball_coords[3] > self.HEIGHT:
                 self.dy = -self.dy
-        
-            overlapping = self.canvas.find_overlapping(*ball_coords)
-        
-            if len(overlapping) > 1:
-                collided_item = overlapping[0]
-        
-                if collided_item == self.player1 or collided_item == self.player2:
-                    # To prevent constant wiggling on top of the player box
-                    if self.wasOverlapping == False:
-                        self.bounce_ball()
-                        
-                    self.wasOverlapping = True
-                else:
-                    self.wasOverlapping = False
     
         if self.stopGame == False:
             self.after(self.REFRESH_TIME, self.refresh)
