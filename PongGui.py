@@ -39,7 +39,7 @@ class PongGui(tk.Frame):
     PADDLE_MOVEMENT = 35
     REFRESH_TIME = 10 # milliseconds
     INCREASE_SPEED = 1.0005
-    INCREASE_MAX = 1.1
+    INCREASE_MAX = 3
     MAX_SCORE = 5
     
     countdown = 0
@@ -68,7 +68,7 @@ class PongGui(tk.Frame):
             self.canvas.pack(side="bottom", fill="x", padx=4)
             
             # Keep a reference for the GUI elements
-            self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.PLAYER_OFFSET + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
+            self.player1 = self.canvas.create_rectangle((self.PLAYER_OFFSET * 3, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), (self.PLAYER_OFFSET * 3) + self.PLAYER_WIDTH, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.player2 = self.canvas.create_rectangle((self.WIDTH - self.PLAYER_WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) - (self.PLAYER_HEIGHT / 2), self.WIDTH - self.PLAYER_OFFSET, (self.HEIGHT / 2) + (self.PLAYER_HEIGHT / 2)), fill="orange")
             self.ball = None  # Set this variable up for reset_ball()
         
@@ -126,8 +126,6 @@ class PongGui(tk.Frame):
         if self.speedIncrease > self.INCREASE_MAX:
             self.speedIncrease = self.INCREASE_MAX
         
-        print self.speedIncrease
-            
         self.canvas.move(self.ball, self.dx * self.speedIncrease, self.dy * self.speedIncrease)    
         
     def show_scores(self):    
