@@ -16,6 +16,7 @@ class SlideShow(tk.Frame):
     stopShowing = False
     
     SLIDE_DURATION = 7500
+    NUMBER_OF_SLIDES = 1
     
     def __init__(self, parent, w, h):
         tk.Frame.__init__(self, parent)
@@ -26,9 +27,13 @@ class SlideShow(tk.Frame):
         
         # pick an image file you have .bmp  .jpg  .gif.  .png
         # load the file and covert it to a Tkinter image object
-        self.image1 = ImageTk.PhotoImage(Image.open('pictures/ouderraad1.jpg'))
-        self.image2 = ImageTk.PhotoImage(Image.open('pictures/ouderraad2.jpg'))
-        self.image3 = ImageTk.PhotoImage(Image.open('pictures/ouderraad3.jpg'))
+        self.image1 = ImageTk.PhotoImage(Image.open('pictures/speelpong.jpg'))
+        
+        if self.NUMBER_OF_SLIDES >= 2:
+            self.image2 = ImageTk.PhotoImage(Image.open('pictures/ouderraad2.jpg'))
+        
+        if self.NUMBER_OF_SLIDES >= 3:  
+            self.image3 = ImageTk.PhotoImage(Image.open('pictures/ouderraad3.jpg'))
 
         # make the root window the size of the image
         #self.canvas.geometry("%dx%d+%d+%d" % (w, h, 0, 0))
@@ -40,18 +45,19 @@ class SlideShow(tk.Frame):
         
         print "Display image1"
         
-        self.after(self.SLIDE_DURATION, self.update_image)
+        if self.NUMBER_OF_SLIDES > 1:
+            self.after(self.SLIDE_DURATION, self.update_image)
         #self.root.mainloop()
 
     def stop(self):
         self.stopShowing = True
         
     def update_image(self):
-        if self.display == self.image1:
+        if self.display == self.image1 and self.NUMBER_OF_SLIDES >= 2:
             self.panel1.configure(image=self.image2)
             print "Display image2"
             self.display = self.image2
-        elif self.display == self.image2:
+        elif self.display == self.image2 and self.NUMBER_OF_SLIDES >= 3:
             self.panel1.configure(image=self.image3)
             print "Display image3"
             self.display = self.image3
